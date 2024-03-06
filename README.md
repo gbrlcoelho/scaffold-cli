@@ -4,29 +4,15 @@ This is a CLI tool to scaffold components, modules, and hooks for React applicat
 
 ## Installation
 
-To install the CLI, clone the repository and install the dependencies using the following commands:
+You can use the CLI without installing it by using `npx`:
 
 ```sh
-git clone https://github.com/gbrlcoelho/scaffold-cli
-cd scaffold-cli
-npm i
-```
-
-## Usage
-
-First build the CLI using the following command inside the scaffold-cli directory:
-
-```sh
-npm run build
-```
-
-You can use the CLI by running the following command on the folder where you want to scaffold the component, module, or hook
-
-```sh
-node path/to/scaffold-cli/dist/app.js create <path>
+npx @gbrlcoelho/scaffold-cli create <path>
 ```
 
 Where `<path>` is the path to the folder where you want to scaffold the component, module, or hook.
+
+## Usage
 
 ### Create a Component
 
