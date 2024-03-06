@@ -1,16 +1,27 @@
 {
-  "name": "cli",
+  "name": "@gbrlcoelho/scaffold-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "A CLI tool to scaffold components, modules, and hooks",
   "main": "dist/app.js",
   "type": "module",
+  "bin": {
+    "scaffold-cli": "dist/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/gbrlcoelho/scaffold-cli/issues"
+  },
+  "homepage": "https://github.com/gbrlcoelho/scaffold-cli#readme",
   "scripts": {
     "build": "npx tsc",
     "lint": "npx eslint"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/gbrlcoelho/scaffold-cli.git"
+  },
+  "author": "Gabriel Coelho <coelhogabriel67@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "commander": "^12.0.0",
     "enquirer": "^2.4.1",
