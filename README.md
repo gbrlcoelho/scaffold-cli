@@ -16,7 +16,7 @@ Where `<path>` is the path to the folder where you want to scaffold the componen
 
 ### Create a Component
 
-To create a component, when prompted for the type. The CLI will create a new directory with the name you provide, and it will generate the necessary files including `index.ts`, `<name>.tsx`, `types.ts`, `styles.ts`, and a `__tests__` directory with a `<name>.test.tsx` file.
+To create a component, select 'Component' when prompted for the type. The CLI will create a new directory with the name you provide, and it will generate the necessary files including `index.ts`, `<name>.tsx`, `types.ts`, `styles.ts`, and a `__tests__` directory with a `<name>.test.tsx` file.
 
 ### Create a Hook
 
