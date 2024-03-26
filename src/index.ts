@@ -13,11 +13,11 @@ export const CLILayer = () => {
   program
     .name('modernization-cli')
     .version('0.0.1')
-    .description('CLI to scaffold components, modules, and hooks');
+    .description('CLI to scaffold components, sub-modules, and hooks');
 
   program
     .command('create')
-    .argument('<subcommand>', 'path to create a component, module, or hook')
+    .argument('<subcommand>', 'path to create a component, sub-module, or hook')
     .action(async subcommand => {
       const {type} = await prompt.selectType();
 

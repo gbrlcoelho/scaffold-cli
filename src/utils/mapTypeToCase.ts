@@ -6,7 +6,7 @@ export const mapTypeToCase = (type: SelectType) => {
       return 'PascalCase';
     case 'Hook':
       return 'camelCase with use prefix';
-    case 'Module':
+    case 'Sub-Module':
       return 'PascalCase';
     default:
       return 'Invalid type';

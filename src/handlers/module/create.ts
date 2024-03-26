@@ -9,7 +9,7 @@ import {
   findDirectories,
 } from '../../utils/fileSystemUtils.js';
 
-export async function createModule(subcommand: string, name: string) {
+export async function createSubModule(subcommand: string, name: string) {
   let modulePath = join(process.cwd(), subcommand);
   if (!modulePath.includes('modules')) {
     modulePath = join(modulePath, 'modules');
@@ -29,7 +29,7 @@ export async function createModule(subcommand: string, name: string) {
   }>({
     type: 'select',
     name: 'directory',
-    message: 'Select a directory to create the module in:',
+    message: 'Select a module to create the sub-module in:',
     choices: directories,
   });
 
@@ -39,16 +39,16 @@ export async function createModule(subcommand: string, name: string) {
   const exportStatement = `export * from './${name}';\n`;
   appendToFile(indexFile, exportStatement);
 
-  const moduleDirectory = join(modulePath, selectedDirectory, name);
-  createDirectoryIfNotExists(moduleDirectory);
+  const subModuleDirectory = join(modulePath, selectedDirectory, name);
+  createDirectoryIfNotExists(subModuleDirectory);
 
-  const moduleDirectoryIndex = join(moduleDirectory, 'index.ts');
+  const subModuleDirectoryIndex = join(subModuleDirectory, 'index.ts');
   createFileWithContent(
-    moduleDirectoryIndex,
+    subModuleDirectoryIndex,
     "export * from './screens';\nexport * from './translations';\n",
   );
 
-  const screensDirectory = join(moduleDirectory, 'screens');
+  const screensDirectory = join(subModuleDirectory, 'screens');
   createDirectoryIfNotExists(screensDirectory);
 
   const screensIndex = join(screensDirectory, 'index.ts');
@@ -66,23 +66,77 @@ export async function createModule(subcommand: string, name: string) {
   const firstScreenIndex = join(firstScreenDirectory, 'index.ts');
   createFileWithContent(firstScreenIndex, `export * from './${name}Screen';\n`);
 
-  const translationsDirectory = join(moduleDirectory, 'translations');
+  const translationsDirectory = join(subModuleDirectory, 'translations');
   createDirectoryIfNotExists(translationsDirectory);
 
+  const translationContent = `{\n  "${name}Screen": {}\n}`;
+
   const en = join(translationsDirectory, 'en.json');
-  createFileWithContent(en, '{}');
+  createFileWithContent(en, translationContent);
 
   const es = join(translationsDirectory, 'es.json');
-  createFileWithContent(es, '{}');
+  createFileWithContent(es, translationContent);
 
   const pt_BR = join(translationsDirectory, 'pt-BR.json');
-  createFileWithContent(pt_BR, '{}');
+  createFileWithContent(pt_BR, translationContent);
 
   const indexTranslations = join(translationsDirectory, 'index.ts');
   createFileWithContent(
     indexTranslations,
-    `import i18n from 'i18next';\n\nimport ${name}EN from './en.json';\nimport ${name}ES from './es.json';\nimport ${name}PT_BR from './pt-BR.json';\n\nconst translations_EN = {\n  ${name}: {\n    ...${name}EN,\n  },\n};\n\nconst translations_ES = {\n  ${name}: {\n    ...${name}ES,\n  },\n};\n\nconst translations_PT_BR = {\n  ${name}: {\n    ...${name}PT_BR,\n  },\n};\n\nexport const loadTranslation${name} = () => {\n  i18n.addResourceBundle('en', 'translation', translations_EN, true, true);\n  i18n.addResourceBundle('es', 'translation', translations_ES, true, true);\n  i18n.addResourceBundle(\n    'pt-BR',\n    'translation',\n    translations_PT_BR,\n   true,\n   true\n);\n};\n`,
+    `import i18n from 'i18next';\n\nimport ${name}EN from './en.json';\nimport ${name}ES from './es.json';\nimport ${name}PT_BR from './pt-BR.json';\n\nconst translations_EN = {\n  ${name}Module: {\n    ...${name}EN,\n  },\n};\n\nconst translations_ES = {\n  ${name}Module: {\n    ...${name}ES,\n  },\n};\n\nconst translations_PT_BR = {\n  ${name}Module: {\n    ...${name}PT_BR,\n  },\n};\n\nexport const loadTranslation${name} = () => {\n  i18n.addResourceBundle('en', 'translation', translations_EN, true, true);\n  i18n.addResourceBundle('es', 'translation', translations_ES, true, true);\n  i18n.addResourceBundle(\n    'pt-BR',\n    'translation',\n    translations_PT_BR,\n    true,\n    true,\n  );\n};\n`,
   );
 
-  console.log(`Module ${name} created in ${moduleDirectory}`);
+  const storeRootDirectory = join(subModuleDirectory, 'store');
+  createDirectoryIfNotExists(storeRootDirectory);
+
+  const indexStoreRoot = join(storeRootDirectory, 'index.ts');
+  createFileWithContent(indexStoreRoot, `export * from './${name}Store';\n`);
+
+  const storeDirectory = join(subModuleDirectory, 'store', `${name}Store`);
+  createDirectoryIfNotExists(storeDirectory);
+
+  const indexStore = join(storeDirectory, 'index.ts');
+  createFileWithContent(indexStore, `export * from './${name}Store';\n`);
+
+  const typesStore = join(storeDirectory, 'types.ts');
+  createFileWithContent(typesStore, `export interface Use${name}Store {}\n`);
+
+  const store = join(storeDirectory, `${name}Store.ts`);
+
+  createFileWithContent(
+    store,
+    `import {create} from 'zustand';\n\nimport {Use${name}Store} from './types';\n\nexport const use${name}Store = create<Use${name}Store>(() => ({}));\n\n// SERVICES => Methods to interact with the store state\nexport const use${name}Services = () => {\n  return {};\n};\n\n// STATES => Every state should have a hook to access it\nexport const use${name}State = () => {\n  return {};\n};\n`,
+  );
+
+  const analyticsDirectory = join(subModuleDirectory, 'analytics');
+  createDirectoryIfNotExists(analyticsDirectory);
+
+  const indexAnalytics = join(analyticsDirectory, 'index.ts');
+  createFileWithContent(
+    indexAnalytics,
+    `export * from './constants';\nexport * from './log${name}';\n`,
+  );
+
+  const constantsAnalytics = join(analyticsDirectory, 'constants.ts');
+
+  createFileWithContent(
+    constantsAnalytics,
+    `// Enums representing log event names\nexport const enum LOG {\n  EVENT_NAME = 'event_name',\n}\n\n// Names of the screens that will be used in the useScreenView hook\nexport const enum SCREEN {\n  SCREEN_NAME = 'screen_name',\n}\n`,
+  );
+
+  const analyticsTypes = join(analyticsDirectory, 'types.ts');
+
+  createFileWithContent(
+    analyticsTypes,
+    `export interface Log${name}Params {}\n\nexport interface LogInterface {}\n`,
+  );
+
+  const logAnalytics = join(analyticsDirectory, `log${name}.ts`);
+
+  createFileWithContent(
+    logAnalytics,
+    `import {LOG} from './constants';\nimport {Log${name}Params, LogInterface} from './types';\n\nexport const log${name} = (params: Log${name}Params) => {\n  // import from the sdk\n  // analytics.logEvent<LogInterface>(LOG.EVENT_NAME, {});\n};\n`,
+  );
+
+  console.log(`Sub-Module ${name} created in ${subModuleDirectory}`);
 }

@@ -2,7 +2,7 @@ import {SelectType} from '../prompt/prompt.js';
 
 import {createComponent} from './component/create.js';
 import {createHook} from './hook/create.js';
-import {createModule} from './module/create.js';
+import {createSubModule} from './module/create.js';
 
 export const handlers = (
   subcommand: string,
@@ -14,8 +14,8 @@ export const handlers = (
       return createComponent(subcommand, name);
     case 'Hook':
       return createHook(subcommand, name);
-    case 'Module':
-      return createModule(subcommand, name);
+    case 'Sub-Module':
+      return createSubModule(subcommand, name);
     default:
       return 'Invalid type';
   }
