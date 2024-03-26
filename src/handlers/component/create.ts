@@ -35,7 +35,7 @@ export const createComponent = (subcommand: string, name: string) => {
   createDirectoryIfNotExists(testsDir);
 
   const testFile = join(testsDir, `${name}.test.tsx`);
-  const testContent = `import React from 'react';\n\nimport {render} from '@testing-library/react-native';\n\nimport {${name}} from '../${name}';\n\nit('renders correctly', () => {\n  const {toJSON} = render(<${name} />);\n  expect(toJSON()).toMatchSnapshot();\n});\n`;
+  const testContent = `import React from 'react';\n\nimport {render} from '@Modernization/test/test-utils';\n\nimport {${name}} from '../${name}';\n\ndescribe('${name}', () => {\n  it('should render', () => {\n    const {toJSON} = render(<${name} />);\n    expect(toJSON()).toMatchSnapshot();\n  });\n});\n`;
   createFileWithContent(testFile, testContent);
 
   const exportStatement = `export {${name}} from './${name}';\n`;
