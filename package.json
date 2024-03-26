@@ -1,6 +1,6 @@
 {
   "name": "@gbrlcoelho/scaffold-cli",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A CLI tool to scaffold components, modules, and hooks",
   "main": "dist/app.js",
   "type": "module",
