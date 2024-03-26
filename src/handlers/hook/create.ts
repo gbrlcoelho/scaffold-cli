@@ -26,7 +26,7 @@ export const createHook = (subcommand: string, name: string) => {
   appendToFile(typesFile, typesContent);
 
   const hookFile = join(hooksDir, `${name}.ts`);
-  const hookContent = `import {useState} from 'react';\n\nexport const ${name} = () => {\n  const [count, setCount] = useState(0)\nreturn {count};\n};\n`;
+  const hookContent = `import {useState} from 'react';\n\nexport const ${name} = () => {\n  const [count, setCount] = useState(0)\n  return {count};\n};\n`;
 
   createFileWithContent(hookFile, hookContent);
 
@@ -35,7 +35,7 @@ export const createHook = (subcommand: string, name: string) => {
 
   const testFile = join(testsDir, `${name}.test.ts`);
 
-  const testContent = `import {renderHook} from '@Modernization/test/test-utils';\n\nimport {${name}} from '../${name}';\n\ndescribe('${name}', () => {\n  it('should render', () => {\n    const {result} = renderHook(() => ${name}());\n    expect(result.current).toBeUndefined();\n});\n});\n`;
+  const testContent = `import {renderHook} from '@Modernization/test/test-utils';\n\nimport {${name}} from '../${name}';\n\ndescribe('${name}', () => {\n  it('should render', () => {\n    const {result} = renderHook(() => ${name}());\n    expect(result.current).toBeUndefined();\n  });\n});\n`;
 
   createFileWithContent(testFile, testContent);
 
