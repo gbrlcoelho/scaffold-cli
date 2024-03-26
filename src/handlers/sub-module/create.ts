@@ -57,6 +57,20 @@ export async function createSubModule(subcommand: string, name: string) {
   const firstScreenDirectory = join(screensDirectory, `${name}Screen`);
   createDirectoryIfNotExists(firstScreenDirectory);
 
+  const firstScreenTestDirectory = join(firstScreenDirectory, '__tests__');
+
+  createDirectoryIfNotExists(firstScreenTestDirectory);
+
+  const firstScreenTestFile = join(
+    firstScreenTestDirectory,
+    `${name}Screen.test.tsx`,
+  );
+
+  createFileWithContent(
+    firstScreenTestFile,
+    `import React from 'react';\nimport {render} from '@Modernization/test/test-utils';\n\nimport {${name}Screen} from '../${name}Screen';\n\ndescribe('${name}Screen', () => {\n  it('should render the screen', () => {\n    render(<${name}Screen />);\n  });\n});\n`,
+  );
+
   const firstScreenFile = join(firstScreenDirectory, `${name}Screen.tsx`);
   createFileWithContent(
     firstScreenFile,
@@ -136,6 +150,17 @@ export async function createSubModule(subcommand: string, name: string) {
   createFileWithContent(
     logAnalytics,
     `import {LOG} from './constants';\nimport {Log${name}Params, LogInterface} from './types';\n\nexport const log${name} = (params: Log${name}Params) => {\n  // import from the sdk\n  // analytics.logEvent<LogInterface>(LOG.EVENT_NAME, {});\n};\n`,
+  );
+
+  const analyticsTestDirectory = join(analyticsDirectory, '__tests__');
+
+  createDirectoryIfNotExists(analyticsTestDirectory);
+
+  const logAnalyticsTest = join(analyticsTestDirectory, `log${name}.test.ts`);
+
+  createFileWithContent(
+    logAnalyticsTest,
+    `import {log${name}} from '../log${name}';\n\ndescribe('log${name}', () => {\n  it('should log the event', () => {\n    // test\n  });\n});\n`,
   );
 
   console.log(`Sub-Module ${name} created in ${subModuleDirectory}`);
