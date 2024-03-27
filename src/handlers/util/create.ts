@@ -25,8 +25,24 @@ export const createUtil = async (subcommand: string, utilName: string) => {
       'Numbers',
       'Dates',
       'Validations',
+      'Others',
     ],
   });
+
+  const utilsIndexFilePath = join(utilsDir, 'index.ts');
+
+  let utilsIndexFileContent = '';
+  if (existsSync(utilsIndexFilePath)) {
+    let fileContent = readFileSync(utilsIndexFilePath, 'utf-8');
+    const exportStatement = `export * from './${utilType.toLowerCase()}';`;
+    if (!fileContent.includes(exportStatement)) {
+      utilsIndexFileContent = `${fileContent}\n${exportStatement}\n`;
+    }
+  } else {
+    utilsIndexFileContent = `export * from './${utilType.toLowerCase()}';\n`;
+  }
+
+  writeFileSync(utilsIndexFilePath, utilsIndexFileContent);
 
   const utilTypePath = resolve(utilsDir, utilType.toLowerCase());
   createDirectoryIfNotExists(utilTypePath);
