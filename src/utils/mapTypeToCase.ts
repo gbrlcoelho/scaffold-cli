@@ -8,6 +8,8 @@ export const mapTypeToCase = (type: SelectType) => {
       return 'camelCase with use prefix';
     case 'Sub-Module':
       return 'PascalCase';
+    case 'Service':
+      return 'camelCase';
     default:
       return 'Invalid type';
   }

@@ -9,7 +9,7 @@ import {
   findDirectories,
 } from '../../utils/fileSystemUtils.js';
 
-export async function createSubModule(subcommand: string, name: string) {
+export const createSubModule = async (subcommand: string, name: string) => {
   let modulePath = join(process.cwd(), subcommand);
   if (!modulePath.includes('modules')) {
     modulePath = join(modulePath, 'modules');
@@ -164,4 +164,4 @@ export async function createSubModule(subcommand: string, name: string) {
   );
 
   console.log(`Sub-Module ${name} created in ${subModuleDirectory}`);
-}
+};

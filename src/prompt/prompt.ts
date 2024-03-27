@@ -2,7 +2,7 @@ import Enquirer from 'enquirer';
 
 import {mapTypeToCase, validate} from '../utils/index.js';
 
-export type SelectType = 'Component' | 'Hook' | 'Sub-Module';
+export type SelectType = 'Component' | 'Hook' | 'Sub-Module' | 'Service';
 
 const selectType = async (): Promise<{type: SelectType}> => {
   const {type} = await Enquirer.prompt<{type: SelectType}>([
@@ -10,7 +10,7 @@ const selectType = async (): Promise<{type: SelectType}> => {
       type: 'select',
       name: 'type',
       message: 'What do you want to create?',
-      choices: ['Component', 'Hook', 'Sub-Module'],
+      choices: ['Component', 'Hook', 'Sub-Module', 'Service'],
     },
   ]);
 
@@ -31,6 +31,8 @@ const inputName = async (type: SelectType): Promise<{name: string}> => {
             return validate.isPascalCase(input);
           case 'Hook':
             return validate.isValidHookName(input);
+          case 'Service':
+            return validate.isCamelCase(input);
 
           default:
             return 'Invalid type';
