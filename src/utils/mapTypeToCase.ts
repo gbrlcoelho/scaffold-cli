@@ -10,6 +10,8 @@ export const mapTypeToCase = (type: SelectType) => {
       return 'PascalCase';
     case 'Service':
       return 'camelCase';
+    case 'Util':
+      return 'camelCase';
     default:
       return 'Invalid type';
   }

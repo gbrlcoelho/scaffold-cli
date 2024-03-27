@@ -4,6 +4,7 @@ import {createComponent} from './component/create.js';
 import {createHook} from './hook/create.js';
 import {createSdkService} from './sdk-service/create.js';
 import {createSubModule} from './sub-module/create.js';
+import {createUtil} from './util/create.js';
 
 export const handlers = (
   subcommand: string,
@@ -19,6 +20,8 @@ export const handlers = (
       return createSubModule(subcommand, name);
     case 'Service':
       return createSdkService(subcommand, name);
+    case 'Util':
+      return createUtil(subcommand, name);
     default:
       return 'Invalid type';
   }
