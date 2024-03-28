@@ -65,16 +65,18 @@ export const createUtil = async (subcommand: string, utilName: string) => {
   let typesFileContent = '';
   if (existsSync(typesFilePath)) {
     let fileContent = readFileSync(typesFilePath, 'utf-8');
-    if (fileContent.includes(`interface ${interfaceName}`)) {
-      const position = fileContent.lastIndexOf(`}`);
-      typesFileContent = `${fileContent.slice(0, position)}  ${utilName}: () => void;\n}\n`;
+    const interfaceStart = fileContent.indexOf(`interface ${interfaceName}`);
+    if (interfaceStart !== -1) {
+      const interfaceEnd = fileContent.indexOf('}', interfaceStart);
+      if (interfaceEnd !== -1) {
+        typesFileContent = `${fileContent.slice(0, interfaceEnd)}  ${utilName}: () => void;\n${fileContent.slice(interfaceEnd)}`;
+      }
     } else {
       typesFileContent = `${fileContent}\nexport interface ${interfaceName} {\n  ${utilName}: () => void;\n}\n`;
     }
   } else {
     typesFileContent = `export interface ${interfaceName} {\n  ${utilName}: () => void;\n}\n`;
   }
-
   writeFileSync(typesFilePath, typesFileContent);
 
   const objectName = `${utilType.toLowerCase()}Utils`;

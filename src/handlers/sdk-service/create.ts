@@ -1,4 +1,5 @@
 import Enquirer from 'enquirer';
+import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import {join} from 'node:path';
 import {
@@ -28,7 +29,10 @@ export const createSdkService = async (
 
   const indexModulePath = join(modulePath, 'index.ts');
   const exportStatement = `export * from './${selectedSubModule}';\n`;
-  appendToFile(indexModulePath, exportStatement);
+
+  if (!readFileSync(indexModulePath, 'utf-8').includes(exportStatement)) {
+    appendToFile(indexModulePath, exportStatement);
+  }
 
   const servicePath = join(modulePath, selectedSubModule, serviceName);
   createDirectoryIfNotExists(servicePath);
