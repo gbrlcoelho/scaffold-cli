@@ -50,7 +50,11 @@ export const createSdkService = async (
 
   const templateContent = template.request
     .replace(/{{name}}/g, requestReplacements.name)
-    .replace(/{{errorClass}}/g, requestReplacements.errorClass);
+    .replace(/{{errorClass}}/g, requestReplacements.errorClass)
+    .replace(
+      /{{nameUpperCase}}/g,
+      capitalizeFirstLetter(requestReplacements.name),
+    );
 
   appendToFile(serviceFile, templateContent);
 
@@ -81,7 +85,7 @@ export const createSdkService = async (
   appendToFile(middleIndexFile, middleExportStatement);
 
   const middleFile = join(middleFolder, `${serviceName}Middle.ts`);
-  const middleContent = template.middle;
+  const middleContent = template.middle.replace(/{{name}}/g, serviceName);
 
   appendToFile(middleFile, middleContent);
 
@@ -91,7 +95,10 @@ export const createSdkService = async (
   appendToFile(middleTypes, middleTypesContent);
 
   const adapterFile = join(servicePath, `adapter.ts`);
-  const adapterContent = template.adapter;
+  const adapterContent = template.adapter.replace(
+    /{{name}}/g,
+    capitalizeFirstLetter(serviceName),
+  );
 
   appendToFile(adapterFile, adapterContent);
 

@@ -119,7 +119,7 @@ export const createSubModule = async (subcommand: string, name: string) => {
 
   createFileWithContent(
     store,
-    `import {create} from 'zustand';\n\nimport {Use${name}Store} from './types';\n\nexport const use${name}Store = create<Use${name}Store>(() => ({}));\n\n// SERVICES => Methods to interact with the store state\nexport const use${name}Services = () => {\n  return {};\n};\n\n// STATES => Every state should have a hook to access it\nexport const use${name}State = () => {\n  return {};\n};\n`,
+    `import {create} from 'zustand';\n\nimport {Use${name}Store} from './types';\n\nconst use${name}Store = create<Use${name}Store>(() => ({}));\n\n// SERVICES => Methods to interact with the store state\nexport const use${name}Services = () => {\n  return {};\n};\n\n// STATES => Every state should have a hook to access it\nexport const use${name}State = () => {\n  return {};\n};\n`,
   );
 
   const analyticsDirectory = join(subModuleDirectory, 'analytics');
