@@ -22,7 +22,7 @@ To create a component, select 'Component' when prompted for the type. The CLI wi
 
 To create a hook, select 'Hook' when prompted for the type. The CLI will append an export statement to the `index.ts` file in the hooks directory and create a new hook file with the name you provide. It will also create a `__tests__` directory with a `<name>.test.ts` file.
 
-### Create a Module
+### Create a Submodule
 
 To create a module, select 'Module' when prompted for the type. The CLI will prompt you to select a directory to create the module in. It will then create a new directory with the name you provide, and generate the necessary files including `index.ts`, a `screens` directory with a screen file and a `translations` directory.
 
