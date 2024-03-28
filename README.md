@@ -26,18 +26,10 @@ To create a hook, select 'Hook' when prompted for the type. The CLI will append 
 
 To create a module, select 'Module' when prompted for the type. The CLI will prompt you to select a directory to create the module in. It will then create a new directory with the name you provide, and generate the necessary files including `index.ts`, a `screens` directory with a screen file and a `translations` directory.
 
-### Create a Service
+### Util
 
-To create a service, select 'Service' when prompted for the type. The CLI will append an export statement to the `index.ts` file in the services directory and create a new service file with the name you provide.
+To create a util, select 'Util' when prompted for the type. The CLI will prompt you to select the type of util you want to create (e.g. `strings`, `objects`, `arrays`, `numbers`, `dates`, `validations`, `others`, etc.). It will then create a new file with the name you provide, type, and the necessary imports.
 
-### Create a Util Function
+### Service
 
-To create a util function, select 'Util' when prompted for the type. The CLI will append an export statement to the `index.ts` file in the utils directory and create a new util file with the name you provide.
-
-## Regras Service
-
-    - Função ira receber um path e o nome do serviço a ser criado.
-        - Checar se pasta service já existe nesse path e criar caso não exista ('./path' se dentro dessa pasta já existir a pasta services, criar dentro dela, caso contrário criar a pasta services).
-        - Caso a pasta service já exista mapear os diretórios dentro dela e exibir para o usuário escolher utilizando o enquirer.
-        - Após mapear os diretórios, verificar os diretórios dentro desse diretório e mapear eles exibindo para o usuário escolher.
-        - Após escolher o diretório, criar pasta com o nome do serviço.
+To create a service, select 'Service' when prompted for the type. The CLI will prompt you to select or create a directory to create the service in (e.g. `auth`, `products`, `users`, etc.). It will prompt again to select the type of service you want to create (e.g. `cart` or `wishlist` for the `products` service) or create a new one. It will then create a new file with the name you provide, type, and the necessary imports.
